@@ -65,6 +65,15 @@ CREATE TABLE `products_types` (
 ALTER TABLE `customers`
   ADD CONSTRAINT `fk_custumer_city` FOREIGN KEY (`city_id`) REFERENCES `cities` (`id`);
   
-  
 ALTER TABLE `orders`
   ADD CONSTRAINT `fk_custumer_order` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`);
+    
+ALTER TABLE `products_orders`
+  ADD CONSTRAINT `fk_order_code` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
+  ADD CONSTRAINT `fk_order_product` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
+  
+ALTER TABLE `products`
+  ADD CONSTRAINT `fk_product_type` FOREIGN KEY (`product_type`) REFERENCES `products_types` (`id`);
+  
+ALTER TABLE `cities`
+  ADD CONSTRAINT `fk_province_code` FOREIGN KEY (`province_id`) REFERENCES `provinces` (`id`); 
