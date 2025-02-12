@@ -11,6 +11,11 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
+CREATE DATABASE optica CHARACTER SET utf8mb4;
+ALTER DATABASE optica COLLATE =utf8mb4_unicode_ci;
+
+USE optica;
+
 CREATE TABLE `addresses` (
   `id` int(11) NOT NULL,
   `street` varchar(100) DEFAULT NULL,
@@ -55,10 +60,10 @@ CREATE TABLE `glasses` (
   `glass_graduation_right` decimal(3,2) DEFAULT NULL,
   `glass_color_right` decimal(3,2) NOT NULL,
   `glass_color_left` decimal(3,2) NOT NULL,
-  `mount_type` int(11) NOT NULL,
+  `mount_type` int(11) DEFAULT NULL,
   `reg_date` datetime NOT NULL DEFAULT current_timestamp(),
-  `price` decimal(10,2) NOT NULL,
-  `provider_id` int(11) NOT NULL
+  `price` decimal(10,2) DEFAULT NULL,
+  `provider_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `mount_types` (
@@ -101,6 +106,8 @@ ALTER TABLE `sales`
   ADD KEY `FK_ID_CUSTOMER` (`id_customer`) USING BTREE,
   ADD KEY `fk_id_glasses` (`id_glasses`);
 
+ALTER TABLE `mount_types` ADD PRIMARY KEY(`id`);
+
 ALTER TABLE `addresses`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
@@ -119,20 +126,25 @@ ALTER TABLE `providers`
 ALTER TABLE `sales`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
-ALTER TABLE `sales`
-  ADD CONSTRAINT `fk_sale_glasses` FOREIGN KEY (`id_glasses`) REFERENCES `glasses` (`id`),
-  ADD CONSTRAINT `fk_sale_customer` FOREIGN KEY (`id_customer`) REFERENCES `customers` (`id`),
-  ADD CONSTRAINT `fk_sale_provider` FOREIGN KEY (`id_provider`) REFERENCES `providers` (`id`);
+ALTER TABLE `mount_types`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `customers` ADD UNIQUE(`nif`);
 
 ALTER TABLE `customers`
   ADD CONSTRAINT `fk_customer_address` FOREIGN KEY (`address_id`) REFERENCES `addresses` (`id`);
 
+ALTER TABLE `providers`
+  ADD CONSTRAINT `fk_provider_address` FOREIGN KEY (`address_id`) REFERENCES `addresses` (`id`);
+
+ALTER TABLE `sales`
+  ADD CONSTRAINT `fk_sale_glasses` FOREIGN KEY (`id_glasses`) REFERENCES `glasses` (`id`),
+  ADD CONSTRAINT `fk_sale_customer` FOREIGN KEY (`id_customer`) REFERENCES `customers` (`id`),
+  ADD CONSTRAINT `fk_sale_employee` FOREIGN KEY (`id_employee`) REFERENCES `employees` (`id`);
+
 ALTER TABLE `glasses`
   ADD CONSTRAINT `fk_glasses_provider` FOREIGN KEY (`provider_id`) REFERENCES `providers` (`id`),
   ADD CONSTRAINT `fk_glasses_mount` FOREIGN KEY (`mount_type`) REFERENCES `mount_types` (`id`);
-
-ALTER TABLE `providers`
-  ADD CONSTRAINT `fk_provider_address` FOREIGN KEY (`address_id`) REFERENCES `addresses` (`id`);
 
 COMMIT;
 
