@@ -30,7 +30,7 @@ CREATE TABLE `providers` (
   `id` int(11) NOT NULL,
   `name` varchar(45) DEFAULT NULL,
   `address_id` int(11) NOT NULL,
-  `telephon` varchar(20) DEFAULT NULL,
+  `phone_number` varchar(20) DEFAULT NULL,
   `fax` varchar(20) DEFAULT NULL,
   `nif` varchar(10) DEFAULT NULL,
   `reg_date` datetime NOT NULL DEFAULT current_timestamp()

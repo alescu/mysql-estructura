@@ -16,7 +16,7 @@
         <mxCell id="E87La_fp3oiZn3WdMD0V-5" value="address_id: int(11)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="E87La_fp3oiZn3WdMD0V-1" vertex="1">
           <mxGeometry y="78" width="200" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="E87La_fp3oiZn3WdMD0V-6" value="telephon: varchar(20)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="E87La_fp3oiZn3WdMD0V-1" vertex="1">
+        <mxCell id="E87La_fp3oiZn3WdMD0V-6" value="phone_number: varchar(20)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="E87La_fp3oiZn3WdMD0V-1" vertex="1">
           <mxGeometry y="104" width="200" height="26" as="geometry" />
         </mxCell>
         <mxCell id="E87La_fp3oiZn3WdMD0V-8" value="fax:&amp;nbsp; varchar(20)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="E87La_fp3oiZn3WdMD0V-1" vertex="1">
@@ -134,7 +134,7 @@
           <mxGeometry y="216" width="190" height="26" as="geometry" />
         </mxCell>
         <mxCell id="E87La_fp3oiZn3WdMD0V-55" value="sales&lt;div&gt;&amp;nbsp;&lt;/div&gt;" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="540" y="540" width="180" height="268" as="geometry" />
+          <mxGeometry x="540" y="540" width="180" height="300" as="geometry" />
         </mxCell>
         <mxCell id="E87La_fp3oiZn3WdMD0V-56" value="PK&amp;nbsp;id: int(11)" style="text;strokeColor=default;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="E87La_fp3oiZn3WdMD0V-55" vertex="1">
           <mxGeometry y="26" width="180" height="26" as="geometry" />
@@ -145,7 +145,7 @@
         <mxCell id="E87La_fp3oiZn3WdMD0V-57" value="id_employee: int(11)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="E87La_fp3oiZn3WdMD0V-55" vertex="1">
           <mxGeometry y="78" width="180" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="E87La_fp3oiZn3WdMD0V-58" value="id_glasses: int(11)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="E87La_fp3oiZn3WdMD0V-55" vertex="1">
+        <mxCell id="E87La_fp3oiZn3WdMD0V-58" value="id_products_sold: int(11)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="E87La_fp3oiZn3WdMD0V-55" vertex="1">
           <mxGeometry y="104" width="180" height="26" as="geometry" />
         </mxCell>
         <mxCell id="rkmJLzN8BwR5XowPxIm3-33" value="price:&amp;nbsp;decimal(10,2)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="E87La_fp3oiZn3WdMD0V-55" vertex="1">
@@ -163,8 +163,11 @@
         <mxCell id="rkmJLzN8BwR5XowPxIm3-46" value="FK fk_sale_customer: int(11)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="E87La_fp3oiZn3WdMD0V-55" vertex="1">
           <mxGeometry y="216" width="180" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="rkmJLzN8BwR5XowPxIm3-47" value="FK fk_sale_glasses: int(11)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="E87La_fp3oiZn3WdMD0V-55" vertex="1">
+        <mxCell id="emfltzd0DvG7L6Zh0Efe-8" value="FK fk_sale_glasses: int(11)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="E87La_fp3oiZn3WdMD0V-55">
           <mxGeometry y="242" width="180" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="rkmJLzN8BwR5XowPxIm3-47" value="FK fk_products_sold: int(11)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="E87La_fp3oiZn3WdMD0V-55" vertex="1">
+          <mxGeometry y="268" width="180" height="32" as="geometry" />
         </mxCell>
         <mxCell id="E87La_fp3oiZn3WdMD0V-68" value="employees" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="810" y="510" width="160" height="112" as="geometry" />
@@ -321,7 +324,7 @@
         <mxCell id="ixOyMXAkQ-w000aH7906-4" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Òptica Cul d&#39;Ampolla&lt;/h1&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(55, 71, 79); font-family: Montserrat, Arial, Helvetica; font-size: 14px; background-color: rgb(248, 248, 248);&quot;&gt;Diagrama entitat-relació de la&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(55, 71, 79); font-family: Montserrat, Arial, Helvetica; font-size: 14px; text-align: justify;&quot;&gt;base de dades.&lt;/span&gt;&lt;/p&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="240" y="30" width="360" height="120" as="geometry" />
         </mxCell>
-        <mxCell id="emfltzd0DvG7L6Zh0Efe-1" value="glasses_sale" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="emfltzd0DvG7L6Zh0Efe-1" value="products_sold" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="810" y="650" width="160" height="138" as="geometry" />
         </mxCell>
         <mxCell id="emfltzd0DvG7L6Zh0Efe-2" value="PK&amp;nbsp;id: int(11)" style="text;strokeColor=default;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="emfltzd0DvG7L6Zh0Efe-1">
