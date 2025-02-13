@@ -1,72 +1,91 @@
+START TRANSACTION;
+CREATE DATABASE pizzeria CHARACTER SET utf8mb4;
+ALTER DATABASE pizzeria COLLATE =utf8mb4_unicode_ci;
 
-CREATE TABLE `customers` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `city_id` int(11) NOT NULL,
-  `name` varchar(50) NOT NULL,
-  `last_names` varchar(150) NOT NULL,
-  `address` varchar(50) NOT NULL,
-  `postal_code` varchar(5) NOT NULL,
-  `phone_number` varchar(10) NOT NULL,
-  PRIMARY KEY (`id`)
+USE pizzeria;
+SET GLOBAL default_storage_engine = InnoDB;
+
+CREATE TABLE `provinces` (
+  `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE `province` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `cities` (
+  `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-CREATE DATABASE optica CHARACTER SET utf8mb4;
-ALTER DATABASE optica COLLATE =utf8mb4_unicode_ci;
-
-USE optica;
-
-CREATE TABLE `city` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) NOT NULL,
-  `province_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
+  `province_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `orders` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL,
   `date` datetime NOT NULL,
-  `total_price` decimal(6,2) NOT NULL,
-  PRIMARY KEY (`id`)
+  `total_price` decimal(6,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `products_orders` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `date` datetime NOT NULL,
-  `price` decimal(6,2) NOT NULL,
-  PRIMARY KEY (`id`)
+  `price` decimal(6,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `products` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `product_type` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
   `image` varchar(50) NOT NULL,
   `product_id` int(11) NOT NULL,
   `price` decimal(6,2) NOT NULL,
   `description` varchar(50) NOT NULL,
-  `date` datetime NOT NULL,
-  PRIMARY KEY (`id`)
+  `date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `products_types` (
-  `id` int(11) NOT NULL,
-  `name` varchar(50) NOT NULL,
-  PRIMARY KEY (`id`)
+  `id` int(11) NOT NULL PRIMARY KEY  AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-ALTER TABLE `customers`
-  ADD CONSTRAINT `fk_custumer_city` FOREIGN KEY (`city_id`) REFERENCES `cities` (`id`);
-  
+CREATE TABLE `customers` (
+  `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `last_names` varchar(150) NOT NULL,
+  `address_id` int(11)  
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `stores` (
+  `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `nif` varchar(50) NOT NULL, 
+  `name` varchar(50) NOT NULL,
+  `address_id` int(11) 
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `workers` (
+  `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `store_id` int(11),
+  `job_id` int(11),
+  `nif` varchar(10) NOT NULL, 
+  `name` varchar(50) NOT NULL,
+  `lastnames` varchar(50) NOT NULL, 
+  `address_id` int(11) 
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `addresses` (
+  `id` int(11) NOT NULL PRIMARY KEY  AUTO_INCREMENT,
+  `address` varchar(50) NOT NULL,
+  `postal_code` varchar(5) NOT NULL,
+  `city_id` int(11) NOT NULL,  
+  `phone_number` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `jobs_category` (
+  `id` int(11) NOT NULL PRIMARY KEY  AUTO_INCREMENT,
+  `job_name` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+ 
 ALTER TABLE `orders`
-  ADD CONSTRAINT `fk_custumer_order` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`);
+  ADD CONSTRAINT `fk_customer_order` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`);
     
 ALTER TABLE `products_orders`
   ADD CONSTRAINT `fk_order_code` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
@@ -76,4 +95,6 @@ ALTER TABLE `products`
   ADD CONSTRAINT `fk_product_type` FOREIGN KEY (`product_type`) REFERENCES `products_types` (`id`);
   
 ALTER TABLE `cities`
-  ADD CONSTRAINT `fk_province_code` FOREIGN KEY (`province_id`) REFERENCES `provinces` (`id`); 
+  ADD CONSTRAINT `fk_province_code` FOREIGN KEY (`province_id`) REFERENCES `provinces` (`id`);
+
+COMMIT;  
