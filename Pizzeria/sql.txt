@@ -43,7 +43,7 @@ CREATE TABLE `delivery` (
   `customer_id` int(11) NOT NULL,
   `order_id` int(11),
   `worker_id` int(11) NOT NULL,
-  `state` int(1) NOT NULL,
+  `status` ENUM('Pending', 'Confirmed', 'Preparing','Delivered','Canceled') NOT NULL,
   `observations` varchar(300),
   `date` datetime NOT NULL,
   `at_home` varchar(1) NOT NULL  
@@ -62,6 +62,7 @@ CREATE TABLE `workers` (
 CREATE TABLE `products` (
   `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `product_type` int(11) NOT NULL,
+  `product_category_id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
   `image` varchar(50) NOT NULL,
   `product_id` int(11) NOT NULL,
@@ -73,6 +74,13 @@ CREATE TABLE `products` (
 CREATE TABLE `products_types` (
   `id` int(11) NOT NULL PRIMARY KEY  AUTO_INCREMENT,
   `name` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `products_categories` (
+  `id` int(11) NOT NULL PRIMARY KEY  AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `date_start` datetime NOT NULL,
+  `date_end` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `jobs_category` (
@@ -100,27 +108,27 @@ CREATE TABLE `provinces` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- FK1
-ALTER TABLE `customer`
+ALTER TABLE `customers`
   ADD CONSTRAINT `fk_customer_address` FOREIGN KEY (`address_id`) REFERENCES `addresses` (`id`);
 
 -- FK2                  
 ALTER TABLE `delivery`
-  ADD CONSTRAINT `fk_custumer_delivery` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`);
+  ADD CONSTRAINT `fk_customer_delivery` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`);
 
 -- FK3                
-ALTER TABLE `products_order`
-  ADD CONSTRAINT `fk_order_code` FOREIGN KEY (`order_id`) REFERENCES `order` (`id`);
+ALTER TABLE `products_orders`
+  ADD CONSTRAINT `fk_products_order` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`);
 
 -- FK4               
-ALTER TABLE `order_product`
-  ADD CONSTRAINT `fk_order_product` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`);
+ALTER TABLE `products_orders`
+  ADD CONSTRAINT `fk_order_product` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
   
 -- FK5               
-ALTER TABLE `product_type`
+ALTER TABLE `products`
   ADD CONSTRAINT `fk_product_type` FOREIGN KEY (`product_type`) REFERENCES `products_types` (`id`);
  
 -- FK6              
-ALTER TABLE `city_province`
+ALTER TABLE `cities`
   ADD CONSTRAINT `fk_province_code` FOREIGN KEY (`province_id`) REFERENCES `provinces` (`id`);
 
 -- FK7             
@@ -135,23 +143,29 @@ ALTER TABLE `delivery`
 ALTER TABLE `delivery`
   ADD CONSTRAINT `fk_delivery_worker` FOREIGN KEY (`worker_id`) REFERENCES `workers` (`id`);
  
+-- FK10             
+ALTER TABLE `workers`
+  ADD CONSTRAINT `fk_worker_store` FOREIGN KEY (`store_id`) REFERENCES `stores` (`id`);
+ 
+-- FK11             
+ALTER TABLE `workers`
+  ADD CONSTRAINT `fk_worker_job_category` FOREIGN KEY (`job_id`) REFERENCES `jobs_category` (`id`);
+ 
+-- FK12             
+ALTER TABLE `stores` 
+  ADD CONSTRAINT `fk_store_address` FOREIGN KEY (`address_id`) REFERENCES `addresses` (`id`);
 
+-- FK13             
+ALTER TABLE `workers` 
+  ADD CONSTRAINT `fk_worker_address` FOREIGN KEY (`address_id`) REFERENCES `addresses` (`id`);
 
-
-
-ALTER TABLE `orders`
-  ADD CONSTRAINT `fk_customer_order` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`);
-    
-ALTER TABLE `products_orders`
-  ADD CONSTRAINT `fk_order_code` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
-  ADD CONSTRAINT `fk_order_product` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
+-- FK14             
+ALTER TABLE `addresses` 
+  ADD CONSTRAINT `fk_address_city` FOREIGN KEY (`city_id`) REFERENCES `cities` (`id`);
   
-ALTER TABLE `products`
-  ADD CONSTRAINT `fk_product_type` FOREIGN KEY (`product_type`) REFERENCES `products_types` (`id`);
-  
-ALTER TABLE `cities`
-  ADD CONSTRAINT `fk_province_code` FOREIGN KEY (`province_id`) REFERENCES `provinces` (`id`);
-
+-- FK15             
+ALTER TABLE `products` 
+  ADD CONSTRAINT `product_category_id` FOREIGN KEY (`product_category_id`) REFERENCES `products_categories` (`id`);
 
 
 COMMIT;  
