@@ -1,5 +1,5 @@
 START TRANSACTION;
-
+USE optica;
 INSERT INTO addresses (street, number, floor, door, postal_code, country) VALUES
 ('Carrer del Sol', 10, '2', 'A', '08001', 'Spain'),
 ('Avinguda Diagonal', 45, '5', 'B', '08002', 'Spain'),
