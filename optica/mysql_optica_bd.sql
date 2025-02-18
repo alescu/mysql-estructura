@@ -8,6 +8,26 @@ ALTER DATABASE optica COLLATE =utf8mb4_unicode_ci;
 USE optica;
 SET GLOBAL default_storage_engine = InnoDB;
 
+CREATE TABLE `providers` (
+  `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  `address_id` int(11),
+  `phone_number` varchar(20) DEFAULT NULL,
+  `fax` varchar(20) DEFAULT NULL,
+  `nif` varchar(10) DEFAULT NULL,
+  `reg_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `customers` (
+  `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `address_id` int(11),
+  `email` varchar(100) NOT NULL,
+  `reg_date` int(11) NOT NULL DEFAULT current_timestamp(),
+  `nif` varchar(10) NOT NULL UNIQUE,
+  `reco_customer` int(11) 
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 CREATE TABLE `addresses` (
   `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `street` varchar(100) DEFAULT NULL,
@@ -18,31 +38,10 @@ CREATE TABLE `addresses` (
   `country` varchar(110) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE `providers` (
-  `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `name` varchar(45) DEFAULT NULL,
-  `address_id` int(11) NOT NULL,
-  `phone_number` varchar(20) DEFAULT NULL,
-  `fax` varchar(20) DEFAULT NULL,
-  `nif` varchar(10) DEFAULT NULL,
-  `reg_date` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-
-CREATE TABLE `customers` (
-  `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `name` varchar(100) NOT NULL,
-  `address_id` int(11) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `reg_date` int(11) NOT NULL DEFAULT current_timestamp(),
-  `nif` varchar(10) NOT NULL UNIQUE,
-  `reco_customer` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 CREATE TABLE `employees` (
   `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
-  `reg_date` datetime NOT NULL DEFAULT current_timestamp()
+  `reg_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `glasses` (
@@ -53,7 +52,7 @@ CREATE TABLE `glasses` (
   `glass_color_right` decimal(3,2) NOT NULL,
   `glass_color_left` decimal(3,2) NOT NULL,
   `mount_type` int(11) DEFAULT NULL,
-  `reg_date` datetime NOT NULL DEFAULT current_timestamp(),
+  `reg_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `price` decimal(10,2) DEFAULT NULL,
   `provider_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -62,7 +61,7 @@ CREATE TABLE `mount_types` (
   `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `color` varchar(50) NOT NULL,
-  `reg_date` datetime NOT NULL DEFAULT current_timestamp()
+  `reg_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `sales` (
@@ -70,7 +69,7 @@ CREATE TABLE `sales` (
   `id_customer` int(11) NOT NULL,
   `id_employee` int(11) NOT NULL,
   `total_price` decimal(10,2) NOT NULL,
-  `reg_date` datetime NOT NULL DEFAULT current_timestamp()
+  `reg_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `basket` (
@@ -79,7 +78,7 @@ CREATE TABLE `basket` (
   `id_glasses` int(11) NOT NULL,
   `amount` int(3) NOT NULL,
   `price` decimal(10,2) NOT NULL,
-  `reg_date` datetime NOT NULL DEFAULT current_timestamp()
+  `reg_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 ALTER TABLE `customers` 

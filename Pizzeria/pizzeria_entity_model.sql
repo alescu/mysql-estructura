@@ -78,6 +78,7 @@ CREATE TABLE `products_types` (
 
 CREATE TABLE `products_categories` (
   `id` int(11) NOT NULL PRIMARY KEY  AUTO_INCREMENT,
+  `product_type_id` int(11),
   `name` varchar(50) NOT NULL,
   `date_start` datetime NOT NULL,
   `date_end` datetime NOT NULL
@@ -167,5 +168,8 @@ ALTER TABLE `addresses`
 ALTER TABLE `products` 
   ADD CONSTRAINT `product_category_id` FOREIGN KEY (`product_category_id`) REFERENCES `products_categories` (`id`);
 
+-- FK16        
+ALTER TABLE `products_categories` 
+  ADD CONSTRAINT `fk_product_type_category` FOREIGN KEY (`product_type_id`) REFERENCES `products_types` (`id`);
 
 COMMIT;  
