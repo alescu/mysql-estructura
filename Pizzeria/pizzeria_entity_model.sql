@@ -19,8 +19,8 @@ CREATE TABLE `orders` (
   `store_id` int(11) NOT NULL,
   `date` datetime NOT NULL,
   `total_price` decimal(6,2) NOT NULL,
-  `at_home` varchar(1) NOT NULL 
-  
+  `at_home` varchar(1) NOT NULL,
+  `status` ENUM('Pending', 'Confirmed', 'Preparing','Delivered','Canceled', 'Paied','Refunded') NOT NULL  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `products_orders` (
@@ -31,22 +31,22 @@ CREATE TABLE `products_orders` (
   `price` decimal(6,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE `stores` (
-  `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `nif` varchar(50) NOT NULL, 
-  `name` varchar(50) NOT NULL,
-  `address_id` int(11) 
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 CREATE TABLE `delivery` (
   `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL,
   `order_id` int(11),
   `worker_id` int(11) NOT NULL,
-  `status` ENUM('Pending', 'Confirmed', 'Preparing','Delivered','Canceled') NOT NULL,
+  `status` ENUM('Pending', 'Confirmed', 'Preparing','Delivered','Canceled', 'Charged') NOT NULL,
   `observations` varchar(300),
   `date` datetime NOT NULL,
   `at_home` varchar(1) NOT NULL  
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `stores` (
+  `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `nif` varchar(50) NOT NULL, 
+  `name` varchar(50) NOT NULL,
+  `address_id` int(11) 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `workers` (
@@ -62,7 +62,6 @@ CREATE TABLE `workers` (
 CREATE TABLE `products` (
   `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `product_type` int(11) NOT NULL,
-  `product_category_id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
   `image` varchar(50) NOT NULL,
   `product_id` int(11) NOT NULL,
@@ -164,11 +163,7 @@ ALTER TABLE `workers`
 ALTER TABLE `addresses` 
   ADD CONSTRAINT `fk_address_city` FOREIGN KEY (`city_id`) REFERENCES `cities` (`id`);
   
--- FK15             
-ALTER TABLE `products` 
-  ADD CONSTRAINT `product_category_id` FOREIGN KEY (`product_category_id`) REFERENCES `products_categories` (`id`);
-
--- FK16        
+-- FK15        
 ALTER TABLE `products_categories` 
   ADD CONSTRAINT `fk_product_type_category` FOREIGN KEY (`product_type_id`) REFERENCES `products_types` (`id`);
 
