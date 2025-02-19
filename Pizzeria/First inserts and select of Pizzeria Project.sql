@@ -47,9 +47,9 @@ INSERT INTO products (product_type, name, image, product_id, price, description,
 
 INSERT INTO jobs_category (job_name) VALUES
 ('Cuiner/a'),
-('Cambrer/a'),
+('Cambrer/a Caixer/a nivell 1'),
+('Caixer/a Caixer/a nivell 2'),
 ('Repartidor/a'),
-('Caixer/a'),
 ('Encàrrec/a');
 
 INSERT INTO stores (nif, name, address_id) VALUES
@@ -64,7 +64,7 @@ INSERT INTO workers (store_id, job_id, nif, name, lastnames, address_id) VALUES
 (1, 1, 'X1234567Y', 'Mario', 'Rossi', 4),  -- La Nonna, Cuiner/a
 (1, 2, 'Z9876543W', 'Luigi', 'Verdi', 5),  -- La Nonna, Cambrer/a
 (2, 1, 'A4567891B', 'Sofia', 'Bianchi', 6), -- Napoli, Cuiner/a
-(2, 3, 'B7890123C', 'Giovanni', 'Neri', 7), -- Napoli, Repartidor/a
+(2, 4, 'B7890123C', 'Giovanni', 'Neri', 7), -- Napoli, Repartidor/a
 (3, 2, 'C1011121D', 'Francesca', 'Gialli', 8); -- Roma, Cambrer/a
 
 INSERT INTO customers (name, last_names, address_id) VALUES
@@ -74,17 +74,17 @@ INSERT INTO customers (name, last_names, address_id) VALUES
 ('Anna', 'Martínez', 4),
 ('Carla', 'Sánchez', 5);
 
-INSERT INTO orders (customer_id, store_id, date, total_price, at_home, status) VALUES
-(1, 1, '2023-10-27 14:00:00', 25.50, 'Y','Canceled' ),  -- Joan, La Nonna
-(2, 2, '2023-10-27 15:30:00', 18.00, 'N', 'Delivered'),  -- Maria, Napoli
-(3, 1, '2023-10-27 16:45:00', 32.75, 'Y', 'Delivered'),  -- Pere, La Nonna
-(4, 3, '2023-10-27 17:15:00', 15.20, 'N', 'Paied'),  -- Anna, Roma
-(5, 2, '2023-10-27 18:00:00', 28.90, 'Y', 'Paied'),  -- Carla, Napoli
-(1, 1, '2024-10-27 14:00:00', 25.50, 'Y', 'Paied'),  -- 6 Joan, La Nonna
-(2, 2, '2024-10-27 15:30:00', 18.00, 'N', 'Paied'),  -- Maria, Napoli
-(3, 1, '2024-10-27 16:45:00', 32.75, 'Y', 'Paied'),  -- 8 Pere, La Nonna
-(4, 3, '2024-10-27 17:15:00', 15.20, 'N', 'Refunded'),  -- Anna, Roma
-(5, 2, '2024-10-27 18:00:00', 28.90, 'Y', 'Paied');  -- 10 Carla, Napoli
+INSERT INTO orders (customer_id, store_id, date, total_price, at_home, status, cooker, server) VALUES
+(1, 1, '2023-10-27 14:00:00', 25.50, 'Y','Canceled',1, 2 ),  -- Joan, La Nonna
+(2, 2, '2023-10-27 15:30:00', 18.00, 'N', 'Delivered',1, 4),  -- Maria, Napoli
+(3, 1, '2023-10-27 16:45:00', 32.75, 'Y', 'Delivered',1, 2),  -- Pere, La Nonna
+(4, 3, '2023-10-27 17:15:00', 15.20, 'N', 'Paied',1, 4),  -- Anna, Roma
+(5, 2, '2023-10-27 18:00:00', 28.90, 'Y', 'Paied',1, 2),  -- Carla, Napoli
+(1, 1, '2024-10-27 14:00:00', 25.50, 'Y', 'Paied',1, 2),  -- 6 Joan, La Nonna
+(2, 2, '2024-10-27 15:30:00', 18.00, 'N', 'Paied',1, 4),  -- Maria, Napoli
+(3, 1, '2024-10-27 16:45:00', 32.75, 'Y', 'Paied',1, 2),  -- 8 Pere, La Nonna
+(4, 3, '2024-10-27 17:15:00', 15.20, 'N', 'Refunded',1, 4),  -- Anna, Roma
+(5, 2, '2024-10-27 18:00:00', 28.90, 'Y', 'Paied', 1, 2);  -- 10 Carla, Napoli
 
 INSERT INTO products_orders (order_id, product_id, date, price) VALUES
 (1, 1, '2023-10-27 14:00:00', 8.99),  -- Margherita (order 1)
@@ -114,17 +114,14 @@ INSERT INTO delivery (customer_id, order_id, worker_id, status, observations, da
 
 COMMIT;  
 
+
+
 -- Consultes Pizzeria:
 -- 1) Llista quants productes de categoria 'Begudes' s'han venut en una determinada localitat.
---		products_categories = 3
--- 		cities.id = 1
--- 		Select 1 : stores.address.city=3 => store.id 
---		Select 2 : order.status='Paied'
+-- SELECT * FROM orders WHERE orders.status='Paied' AND orders.id IN (SELECT str.id FROM stores str LEFT JOIN addresses adr ON str.address_id=adr.id AND adr.id=3)
 
-		SELECT * FROM orders WHERE status='Paied' AND id IN (  )
-		SELECT id FROM stores s LEFT JOIN addresses a ON s.address_id=a.id
-			stores (nif, name, address_id)
-			addresses (address, postal_code, city_id, phone_number)
-
--- 2) Llista quantes comandes ha efectuat un determinat empleat/da
--- 		
+-- 2) Llista quantes comandes ha efectuat un determinat empleat/da:
+-- La consulta cerca qui les ha servit:
+-- SELECT wrkr.name , count(ord.id) FROM orders ord LEFT JOIN workers wrkr ON ord.server=wrkr.id GROUP BY ord.server
+-- La consulta cerca qui les ha cuinat:
+-- SELECT wrkr.name , count(ord.id) FROM orders ord LEFT JOIN workers wrkr ON ord.cooker=wrkr.id GROUP BY ord.cooker

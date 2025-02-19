@@ -20,6 +20,8 @@ CREATE TABLE `orders` (
   `date` datetime NOT NULL,
   `total_price` decimal(6,2) NOT NULL,
   `at_home` varchar(1) NOT NULL,
+  `cooker`  int(11), -- Cuiner de la comanda
+  `server`  int(11), -- Qui ha servit la comanda
   `status` ENUM('Pending', 'Confirmed', 'Preparing','Delivered','Canceled', 'Paied','Refunded') NOT NULL  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -36,7 +38,7 @@ CREATE TABLE `delivery` (
   `customer_id` int(11) NOT NULL,
   `order_id` int(11),
   `worker_id` int(11) NOT NULL,
-  `status` ENUM('Pending', 'Confirmed', 'Preparing','Delivered','Canceled', 'Charged') NOT NULL,
+  `status` ENUM('Pending', 'Confirmed', 'Preparing','Delivered','Canceled', 'Paied in delivery') NOT NULL,
   `observations` varchar(300),
   `date` datetime NOT NULL,
   `at_home` varchar(1) NOT NULL  
@@ -46,7 +48,7 @@ CREATE TABLE `stores` (
   `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `nif` varchar(50) NOT NULL, 
   `name` varchar(50) NOT NULL,
-  `address_id` int(11) 
+  `address_id` int(11)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `workers` (
